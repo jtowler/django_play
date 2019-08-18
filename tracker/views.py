@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def exercise_list(request):
+    return render(request, 'tracker/exercise_list.html', {})
