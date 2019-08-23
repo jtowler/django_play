@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, redirect
 
 app = Flask(__name__)
 
@@ -16,9 +16,14 @@ def http_404_handler():
 @app.route('/set-cookie')
 def set_cookie():
     res = make_response("Cookie setter")
-    res.set_cookie("favorite-color", "skyblue", 60*60*24*15)
-    res.set_cookie("favorite-font", "sans-serif", 60*60*24*15)
+    res.set_cookie("favorite-color", "skyblue", 60 * 60 * 24 * 15)
+    res.set_cookie("favorite-font", "sans-serif", 60 * 60 * 24 * 15)
     return res
+
+
+@app.route('/transfer')
+def transfer():
+    return redirect("http://localhost:5000/login", code=301)
 
 
 @app.route('/user/<int:user_id>/')
