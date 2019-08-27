@@ -1,43 +1,41 @@
-from flask import Flask, request, make_response, redirect
+from flask import Flask, render_template
+from flask_script import Manager, Command
 
 app = Flask(__name__)
+app.debug = True
+manager = Manager(app)
+
+
+class Faker(Command):
+    """blah"""
+
+    def run(self):
+        print('fake date entered')
+
+
+manager.add_command('faker', Faker())
+
+
+@manager.command
+def foo():
+    """blaaaa"""
+    print('foo executed')
 
 
 @app.route('/')
-def requestdata():
-    return f"Your IP is {request.remote_addr} and you are using {request.user_agent}"
-
-
-@app.route('/a')
-def http_404_handler():
-    return make_response("<h2>404 Error</h2>", 400)
-
-
-@app.route('/set-cookie')
-def set_cookie():
-    res = make_response("Cookie setter")
-    res.set_cookie("favorite-color", "skyblue", 60 * 60 * 24 * 15)
-    res.set_cookie("favorite-font", "sans-serif", 60 * 60 * 24 * 15)
-    return res
-
-
-@app.route('/transfer')
-def transfer():
-    return redirect("http://localhost:5000/login", code=301)
+def index():
+    return render_template('index.html', name='Jerry')
 
 
 @app.route('/user/<int:user_id>/')
 def user_profile(user_id):
-    return f'Profile Page of user #{user_id}'
+    return "Profile page of user #{}".format(user_id)
 
 
 @app.route('/books/<genre>/')
 def books(genre):
-    res = make_response("All Books in {} category".format(genre))
-    res.headers['Content-Type'] = 'text/plain'
-    res.headers['Server'] = 'Foobar'
-    return res
+    return "All Books in {} category".format(genre)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    manager.run()
