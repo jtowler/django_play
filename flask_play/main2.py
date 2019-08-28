@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_script import Manager, Command
+from flask_script import Manager, Command, Shell
 
 app = Flask(__name__)
 app.debug = True
@@ -37,5 +37,12 @@ def books(genre):
     return "All Books in {} category".format(genre)
 
 
+def shell_context():
+    import os
+    import sys
+    return dict(app=app, os=os, sys=sys)
+
+
+manager.add_command("shell", Shell(make_context=shell_context))
 if __name__ == "__main__":
     manager.run()
