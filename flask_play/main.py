@@ -14,8 +14,8 @@ def career():
 
 
 @app.route('/user/<int:id>/')
-def user_profile(id):
-    return f'Profile Page of user #{id}'
+def user_profile(id_):
+    return f'Profile Page of user #{id_}'
 
 
 @app.route('/contact/')

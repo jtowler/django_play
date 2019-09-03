@@ -35,9 +35,9 @@ app.layout = html.Div([
 
 
 def highlight(x, y):
-    def callback(*selectedDatas):
+    def callback(*selected_datas):
         selectedpoints = df.index
-        for i, selected_data in enumerate(selectedDatas):
+        for i, selected_data in enumerate(selected_datas):
             if selected_data is not None:
                 selected_index = [
                     p['customdata'] for p in selected_data['points']
@@ -45,7 +45,6 @@ def highlight(x, y):
                 if len(selected_index) > 0:
                     selectedpoints = np.intersect1d(
                         selectedpoints, selected_index)
-
 
         # set which points are selected with the `selectedpoints` property
         # and style those points with the `selected` and `unselected`
@@ -104,12 +103,12 @@ def highlight(x, y):
                 'color': 'darkgrey'
             }
         }
-        if selectedDatas[0] and selectedDatas[0]['range']:
+        if selected_datas[0] and selected_datas[0]['range']:
             figure['layout']['shapes'] = [dict({
-                'x0': selectedDatas[0]['range']['x'][0],
-                'x1': selectedDatas[0]['range']['x'][1],
-                'y0': selectedDatas[0]['range']['y'][0],
-                'y1': selectedDatas[0]['range']['y'][1]
+                'x0': selected_datas[0]['range']['x'][0],
+                'x1': selected_datas[0]['range']['x'][1],
+                'y0': selected_datas[0]['range']['y'][0],
+                'y1': selected_datas[0]['range']['y'][1]
             }, **shape)]
         else:
             figure['layout']['shapes'] = [dict({
@@ -123,7 +122,6 @@ def highlight(x, y):
         return figure
 
     return callback
-
 
 
 # app.callback is a decorator which means that it takes a function
